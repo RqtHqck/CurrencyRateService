@@ -1,0 +1,25 @@
+{
+  "name": "currencyrateservice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "nodemon index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RqtHqck/CurrencyRateService.git"
+  },
+  "author": "Ihar Tsitou",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RqtHqck/CurrencyRateService/issues"
+  },
+  "homepage": "https://github.com/RqtHqck/CurrencyRateService#readme",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "nodemon": "^3.1.7"
+  }
+}
