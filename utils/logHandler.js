@@ -1,24 +1,28 @@
-const winston = require('winston');
+const { createLogger, format, transports } = require('winston');
 
 // Конфигурация логгера
-const logger = winston.createLogger({
+const logger = createLogger({
   level: 'info', // минимальный уровень логирования
+  format: format.combine(
+    format.timestamp(),
+    format.json() // Формат логов в JSON
+  ),
   transports: [
-    new winston.transports.File({
+    new transports.File({
       level: 'info',
       filename: './logs/all-logs.log',
       handleExceptions: true,
-      format: winston.format.json(),
+      format: format.json(),
       maxsize: 5242880, // 5MB
       maxFiles: 5,
       colorize: false
     }),
-    new winston.transports.Console({
+    new transports.Console({
       level: 'debug',
       handleExceptions: true,
-      format: winston.format.combine(
-        winston.format.colorize(),
-        winston.format.simple()
+      format: format.combine(
+        format.colorize(),
+        format.simple()
       ),
     })
   ],

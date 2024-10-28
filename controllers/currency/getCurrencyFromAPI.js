@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 
-async function getCurrencyFreaksFromAPI() {
+async function getCurrencyFromAPI() {
   try {
     const response = await axios.get(`https://api.currencyfreaks.com/v2.0/rates/latest?apikey=${ process.env.CURRENCY_FREAKS_API }`);
     if (response.status == 200) {
@@ -15,4 +15,4 @@ async function getCurrencyFreaksFromAPI() {
   }
 }
 
-module.exports = getCurrencyFreaksFromAPI;
+module.exports = getCurrencyFromAPI;

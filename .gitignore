@@ -11,6 +11,7 @@ build/
 temp/
 .tmp/
 logs/
+migrations/
 
 # Secret data
 .env
