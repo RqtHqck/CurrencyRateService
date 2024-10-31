@@ -16,7 +16,6 @@ module.exports.getAllCurrenciesByDate = async (req, res) => {
       res.status(200).json(currency);
     } else {
       const response = await getCurrencyFromAPI();
-
     }
 
   } catch (err) {
