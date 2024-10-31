@@ -1,5 +1,5 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../middlewares/sequelize')
+const { DataTypes, Sequelize } = require('sequelize');
+const sequelize = require('../utils/sequelize')
 
 const Currency = sequelize.define('Currency', {
   currency_id: {
@@ -17,7 +17,8 @@ const Currency = sequelize.define('Currency', {
   },
   created_at: {
     type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
+    allowNull: false,
+    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP') // For MySQL
   }
 }, {
     timestamps: false,
@@ -27,3 +28,5 @@ const Currency = sequelize.define('Currency', {
 
 
 module.exports = Currency;
+
+0,31536148365137561

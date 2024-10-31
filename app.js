@@ -6,7 +6,8 @@ const logger = require('./utils/logHandler');
 const rateLimit = require('express-rate-limit');
 const compression = require('compression');
 const helmet = require('helmet');
-const sequelize = require('./middlewares/sequelize.js');
+const sequelize = require('./utils/sequelize.js');
+
 
 const app = express();
 // Config app
