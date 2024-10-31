@@ -8,11 +8,11 @@ const Currency = sequelize.define('Currency', {
     primaryKey: true
   },
   currency_code: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(100),
     allowNull: false,
   },
   currency_value: {
-    type: DataTypes.STRING,
+    type: DataTypes.DECIMAL(18, 8),
     allowNull: false,
   },
   created_at: {
@@ -28,5 +28,3 @@ const Currency = sequelize.define('Currency', {
 
 
 module.exports = Currency;
-
-0,31536148365137561

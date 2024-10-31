@@ -1,13 +1,15 @@
 const router = require('express').Router();
 const controllers = require('../controllers/currency/currency')
-const validateDateQuerry = require('../middlewares/validateDateReqQuery')
+const ValidateQueryParams = require('../middlewares/ValidateQueryParams')
+const validate = new ValidateQueryParams();
 
 // GET http://localhost:5000/api/currency/getAllCurrenciesByDate?date=date&ticket=ticket
-router.get('/getAllCurrenciesByDate', validateDateQuerry, controllers.getAllCurrenciesByDate)
+router.get('/getAllCurrenciesByDate', validate.validateDate, controllers.getAllCurrenciesByDate)
 
 // GET http://localhost:5000/api/currency/getCoupleCurrency?date=date&from=from&to=to
-router.get('/getCoupleCurrency', validateDateQuerry, controllers.getCoupleCurrency)
+router.get('/getCoupleCurrency', validate.validateDate, validate.validateTicketName, controllers.getCoupleCurrency)
 
-router.get('/getCurrencyFreaks', controllers.getCurrencyFreaks)
+// GET http://localhost:5000/api/currency/saveCurrencyFreaks
+router.get('/saveCurrencyFreaks', controllers.saveCurrencyFreaks)
 
 module.exports = router;
