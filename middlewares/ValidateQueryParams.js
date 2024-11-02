@@ -2,7 +2,7 @@ const { query, validationResult} = require('express-validator');
 
 
 module.exports = class ValidateQueryParams {
-  validateDate = [
+  static validateDate = [
     query('date', 'Incorrect value')
       .optional() // unnecessary query param
       .isISO8601().withMessage('Date have to be in format YYYY-MM-DD'),
@@ -16,7 +16,7 @@ module.exports = class ValidateQueryParams {
     }
   ];
 
-  validateTicketName = [
+  static validateTicketName = [
     query('ticket', 'Incorrect value')
       .optional()
       .isString()

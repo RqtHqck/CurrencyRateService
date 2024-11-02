@@ -6,7 +6,8 @@ const logger = require('./utils/logHandler');
 const rateLimit = require('express-rate-limit');
 const compression = require('compression');
 const helmet = require('helmet');
-const sequelize = require('./utils/sequelize.js');
+const sequelize = require('./utils/sequelize');
+const scheduleTasks = require('./utils/nodeCron');
 
 
 const app = express();
@@ -21,6 +22,7 @@ const limiter = rateLimit({
   max: 100, // Ограничение 100 запросов с одного IP
 });
 app.use(limiter);
+scheduleTasks();
 
 // DB MYSQL
 (async () => {

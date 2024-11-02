@@ -1,30 +1,45 @@
-const { DataTypes, Sequelize } = require('sequelize');
+const { Sequelize, Model, DataTypes } = require('sequelize');
 const sequelize = require('../utils/sequelize')
+const moment = require('moment');
 
-const Currency = sequelize.define('Currency', {
-  currency_id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true
-  },
-  currency_code: {
-    type: DataTypes.STRING(100),
-    allowNull: false,
-  },
-  currency_value: {
-    type: DataTypes.DECIMAL(18, 8),
-    allowNull: false,
-  },
-  created_at: {
-    type: DataTypes.DATE,
-    allowNull: false,
-    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP') // For MySQL
+class Currency extends Model {}
+
+Currency.init({
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    code: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+    },
+    value: {
+      type: DataTypes.DECIMAL(18, 8),
+      allowNull: false,
+    },
+    date: {
+      type: DataTypes.DATEONLY,
+      allowNull: false,
+      defaultValue: () => moment().format('YYYY-MM-DD'),
+      set(value) {
+        this.setDataValue('date', value ? moment(value).format('YYYY-MM-DD') : moment().format('YYYY-MM-DD'));
+      }
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP') // For MySQL
+    }
+  }, {
+  sequelize,
+  modelName: 'Currency',
+  tableName: 'currencies',
+  timestamps: false
   }
-}, {
-    timestamps: false,
-    tableName: 'currencies',
-  }
-)
+);
+
+
 
 
 module.exports = Currency;
