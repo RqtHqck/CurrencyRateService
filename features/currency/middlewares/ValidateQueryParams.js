@@ -1,5 +1,7 @@
-const { query, validationResult} = require('express-validator');
-const logger = require('../utils/logger');
+const { query, validationResult} = require('express-validator'),
+  logger = require('../../../utils/logger'),
+  CurrenciesService = require('../services/currencies.service');
+  moment = require('moment')
 
 
 class ValidateQueryParams {
@@ -7,7 +9,15 @@ class ValidateQueryParams {
     return [
       query('date', 'Incorrect value')
         .optional() // unnecessary query param
-        .isISO8601().withMessage('Date have to be in format YYYY-MM-DD'),
+        .isISO8601().withMessage('Date have to be in format YYYY-MM-DD')
+        .custom((value, {req, res}) => {
+          if (moment(value).isAfter(CurrenciesService.today)) {
+            logger.info('Date parameter should be today or less then today date')
+            throw new Error('Date parameter should be today or less than today date');
+          } return true;
+
+      }),
+
       this.handleValidationErrors
     ];
   }
@@ -26,7 +36,7 @@ class ValidateQueryParams {
   static handleValidationErrors = (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      logger.info('Validation errors:', errors.array()); // Добавлено логирование
+      logger.error('Validation errors:', errors.array()); // Добавлено логирование
       return res.status(400).json({ errors: errors.array() });
     }
     next();

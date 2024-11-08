@@ -3,6 +3,7 @@ const Currency = require('../models/Currency'),
   axios = require('axios'),
   moment = require('moment')
 
+
 class CurrenciesService {
 
   static get today() {
