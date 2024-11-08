@@ -1,5 +1,5 @@
 const { query, validationResult} = require('express-validator');
-const logger = require('../utils/logHandler');
+const logger = require('../utils/logger');
 
 
 class ValidateQueryParams {

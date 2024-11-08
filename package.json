@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "nodemon index"
+    "server": "nodemon index",
+    "inspect": "node inspect --inspect=127.0.0.1:9229 index"
   },
   "repository": {
     "type": "git",

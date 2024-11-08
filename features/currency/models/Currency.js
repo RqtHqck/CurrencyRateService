@@ -1,5 +1,5 @@
 const { Sequelize, Model, DataTypes } = require('sequelize');
-const sequelize = require('../utils/sequelize')
+const sequelize = require('../../../utils/sequelize')
 const moment = require('moment');
 
 class Currency extends Model {}
@@ -35,7 +35,21 @@ Currency.init({
   sequelize,
   modelName: 'Currency',
   tableName: 'currencies',
-  timestamps: false
+  timestamps: false,
+  indexes: [
+    {
+      name: 'idx_date_code',
+      fields: ['date', 'code'],
+    },
+    {
+      name: 'idx_date',
+      fields: ['date'],
+    },
+    {
+      name: 'idx_code',
+      fields: ['code']
+    }
+  ]
   }
 );
 
