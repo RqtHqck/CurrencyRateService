@@ -1,6 +1,4 @@
-const Currency = require('../models/Currency'),
-  logger = require('../../../utils/logger'),
-  {Op} = require('sequelize'),
+const logger = require('../../../utils/logger'),
   CurrenciesService = require('../services/currencies.service')
 
 

@@ -14,7 +14,8 @@ logs/
 migrations/
 
 # Secret data
-.env
+.env.development
+.env.production
 
 # IDE and editors
 .vscode/

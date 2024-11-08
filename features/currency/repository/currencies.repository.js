@@ -1,5 +1,5 @@
-const Currency = require('../models/Currency'),
-  logger = require('../../../utils/logger'),
+const logger = require('../../../utils/logger'),
+  Currency = require('../models/Currency'),
   CurrenciesUtils = require('../utils/currencies.utils')
 
 class CurrencyRepository extends CurrenciesUtils {

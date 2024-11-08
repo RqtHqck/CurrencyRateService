@@ -71,7 +71,7 @@ class CurrenciesService extends CurrenciesUtils{
       } else if (params.ticket) {
         filters.code = params.ticket; // ticket
 
-      } else if (!params.date && !params.ticket) {
+      } else {
         filters.date = this.today;
 
       }
