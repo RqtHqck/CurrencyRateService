@@ -15,6 +15,7 @@ router.get(
 router.get(
   '/getCoupleCurrency',
   ValidateQueryParams.validateTicketName(),
+  ValidateQueryParams.validateTicketFromTo(),
   CurrenciesController.getCoupleCurrency
 );
 

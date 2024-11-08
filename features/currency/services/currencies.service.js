@@ -1,46 +1,30 @@
-const Currency = require('../models/Currency'),
-  logger = require('../../../utils/logger'),
+const logger = require('../../../utils/logger'),
   axios = require('axios'),
-  moment = require('moment')
+  CurrenciesUtils = require('../utils/currencies.utils'),
+  {Op} = require('sequelize');
+  CurrenciesRepository = require('../repository/currencies.repository');
 
 
-class CurrenciesService {
+class CurrenciesService extends CurrenciesUtils{
 
-  static get today() {
-    return moment().format('YYYY-MM-DD');
-  }
-
-  static getTodayCurrenciesFromDB = async () => {
-    // return currencies for today or []
+  static saveCurrencies = async () => {
+    // Save retrieved data from third-party API to database
     try {
-      let currencies = await Currency.findAll({ where: { date: CurrenciesService.today } });
-      return currencies && currencies.length > 0 ? currencies : [];  // возвращаем currencies, если он не пустой, иначе []
-    } catch (err) {
-      logger.error('Error fetching today\'s currencies from database', err);
-      return [];  // возвращаем пустой массив при ошибке
-    }
-  }
-
-  static saveFromCurrenciesFromApiToDb = async () => {
-    // Save retrieved data from API\
-    try {
-      const rates = await CurrenciesService.getCurrencyFromAPI(); // Take response from API
+      const rates = await CurrenciesService.fetchCurrenciesFromApi(); // Take response from API
 
       let currencies = [];  // Arr for storing
       for( const [key, value] of Object.entries(rates) ) {
         currencies.push({ code: key, value: parseFloat(value) });  // Add obj-s to arr
       }
 
-      await Currency.bulkCreate(currencies);  // Save to db
-      // return res.status(201).json(currencies);  // return currencies
+      await CurrenciesRepository.saveCurrencies(currencies);  // Save to db
     } catch (err) {
-      logger.error('Error:', err);
-      throw new Error('Error during uploading new currencies to database.');
-      // return res.status(500).json({ message: 'Error saving currencies to database', error: err.message })
+      logger.error('Error during saving new currencies to database:', err);
+      throw new Error('Error during saving new currencies to database.');
     }
   }
 
-  static  getCurrencyFromAPI = async () => {
+  static fetchCurrenciesFromApi = async () => {
     // Get and filter response from third-party API https://api.currencyfreaks.com
     // ticketsRequired - 'EUR', 'BYN', 'RUB', 'JPY', 'KZT', 'CNY', 'AUD', 'GBP'
     try {
@@ -57,15 +41,53 @@ class CurrenciesService {
     }
   }
 
-  static checkTodayCurrenciesFromDb = async () => {
-    const currencies = await CurrenciesService.getTodayCurrenciesFromDB(); // Get today currencies from db
-    return currencies && currencies.length > 0;
+  static checkOrRetrieveTodayCurrencies = async () => {
+    try {
+      const currencies = await CurrenciesRepository.filterCurrencies({date: this.today}); // Get today currencies from db
+      if (!currencies && currencies.length === 0 ) {
+        logger.info('No today currencies, take today currencies');
+        await CurrenciesRepository.saveCurrencies(); // save to db
+      }
+    } catch (err) {
+      logger.error('Unexpected error while retrieving checking is current API data exists', err);
+      throw new Error(`Unexpected error while retrieving checking is current API data exists`);
+    }
   }
 
   static transferCurrency = (from, to) => {
     return (to / from);
   }
 
+  static getFilterCurrencies = async (params, endpoint) => {
+    const filters = {};
+    if (endpoint === 'getCurrencies') {
+      // console.log(filters)
+      if (params.date && params.ticket) {
+        filters[Op.and] = [{date: params.date, code: params.ticket}]; // date && ticket
+
+      } else if (params.date) {
+        filters.date = params.date; // date
+
+      } else if (params.ticket) {
+        filters.code = params.ticket; // ticket
+
+      } else if (!params.date && !params.ticket) {
+        filters.date = this.today;
+
+      }
+    } else if (endpoint === 'getCoupleCurrency') {
+      console.log(filters)
+      if (params.from) {
+        filters[Op.and] = [{date: this.today, code: params.from}];
+
+      } else if (params.to) {
+        filters[Op.and] = [{date: this.today, code: params.to}];
+
+      }
+    }
+
+      return await CurrenciesRepository.filterCurrencies(filters);
+  }
 }
 
 module.exports = CurrenciesService;
