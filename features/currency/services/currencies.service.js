@@ -1,11 +1,11 @@
 const logger = require('../../../utils/logger'),
   axios = require('axios'),
-  CurrenciesUtils = require('../utils/currencies.utils'),
+  CurrencyUtils = require('../utils/currencies.utils'),
   {Op} = require('sequelize'),
-  CurrenciesRepository = require('../repository/currencies.repository');
+  CurrencyRepository = require('../repository/currencies.repository')
 
 
-class CurrenciesService extends CurrenciesUtils{
+class CurrenciesService {
 
   static saveCurrencies = async () => {
     // Save retrieved data from third-party API to database
@@ -17,7 +17,7 @@ class CurrenciesService extends CurrenciesUtils{
         currencies.push({ code: key, value: parseFloat(value) });  // Add obj-s to arr
       }
       console.log(`TO SAVE${currencies}`);
-      await CurrenciesRepository.saveCurrencies(currencies);  // Save to db
+      await CurrencyRepository.save(currencies);  // Save to db
     } catch (err) {
       logger.error('Error during saving new currencies to database:', err);
       throw new Error('Error during saving new currencies to database.');
@@ -43,7 +43,7 @@ class CurrenciesService extends CurrenciesUtils{
 
   static checkOrRetrieveTodayCurrencies = async () => {
     try {
-      let currencies = await CurrenciesRepository.filterCurrencies({date: this.today}); // Get today currencies from db
+      let currencies = await CurrencyRepository.filter({date: CurrencyUtils.today()}); // Get today currencies from db
       if ( currencies.length === 0 ) {
         logger.info('No today currencies, take today currencies');
         await CurrenciesService.saveCurrencies(); // save to db
@@ -71,20 +71,20 @@ class CurrenciesService extends CurrenciesUtils{
         filters.code = params.ticket; // ticket
 
       } else {
-        filters.date = this.today;
+        filters.date = CurrencyUtils.today();
 
       }
     } else if (endpoint === 'getCoupleCurrency') {
       if (params.from) {
-        filters[Op.and] = [{date: this.today, code: params.from}];
+        filters[Op.and] = [{date: CurrencyUtils.today(), code: params.from}];
 
       } else if (params.to) {
-        filters[Op.and] = [{date: this.today, code: params.to}];
+        filters[Op.and] = [{date: CurrencyUtils.today(), code: params.to}];
 
       }
     }
 
-      return await CurrenciesRepository.filterCurrencies(filters);
+      return await CurrencyRepository.filter(filters);
   }
 }
 

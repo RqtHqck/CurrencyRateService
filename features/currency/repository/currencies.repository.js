@@ -1,21 +1,11 @@
-const logger = require('../../../utils/logger'),
-  Currency = require('../models/Currency'),
-  CurrenciesUtils = require('../utils/currencies.utils')
+const BaseRepository = require('../../../repository/BaseRepository'),
+  Currency = require('../models/Currency')
 
-class CurrencyRepository extends CurrenciesUtils {
-
-  static saveCurrencies = async (currencies) => {
-    try {
-    await Currency.bulkCreate(currencies);  // Save to db
-    } catch (err) {
-      logger.error('Error save to database', err);
-      throw new Error('Error save to database');
-    }
-  }
-
-  static filterCurrencies = async (filters) => {
-    return await Currency.findAll({ where: filters });  // date & ticket
+class CurrencyRepository extends BaseRepository {
+  constructor() {
+    super(Currency);
   }
 }
 
-module.exports = CurrencyRepository;
+const currencyRepository = new CurrencyRepository();
+module.exports = currencyRepository;

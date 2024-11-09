@@ -1,7 +1,6 @@
 const { query, validationResult} = require('express-validator'),
   logger = require('../../../utils/logger'),
-  CurrenciesUtils = require('../utils/currencies.utils');
-  moment = require('moment')
+  CurrencyUtils = require('../utils/currencies.utils');
 
 
 class ValidateQueryParams {
@@ -11,7 +10,7 @@ class ValidateQueryParams {
         .optional() // unnecessary query param
         .isISO8601().withMessage('Date have to be in format YYYY-MM-DD')
         .custom((value, { req }) => {
-          if (value && moment(value).isAfter(CurrenciesUtils.today)) {
+          if (value && CurrencyUtils.todayToMoment(value).isAfter(CurrencyUtils.todayToMoment(CurrencyUtils.today()))) {
             logger.info('Date parameter should be today or less then today date')
             throw new Error('Date parameter should be today or less than today date');
           } return true;

@@ -1,9 +1,10 @@
-const moment = require('moment')
+const BaseUtils = require('../../../utils/BaseUtils');
 
-class CurrencyUtils {
-  static get today() {
-    return moment().format('YYYY-MM-DD');
+class CurrencyUtils extends BaseUtils {
+  constructor() {
+    super();
   }
 }
 
-module.exports = CurrencyUtils;
+const currencyUtils = new CurrencyUtils()
+module.exports = currencyUtils;

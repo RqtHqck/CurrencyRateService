@@ -1,6 +1,7 @@
 const { Sequelize, Model, DataTypes } = require('sequelize');
 const sequelize = require('../../../utils/sequelize')
-const moment = require('moment');
+const CurrencyUtils = require('../utils/currencies.utils');
+
 
 class Currency extends Model {}
 
@@ -21,9 +22,8 @@ Currency.init({
     date: {
       type: DataTypes.DATEONLY,
       allowNull: false,
-      defaultValue: () => moment().format('YYYY-MM-DD'),
-      set(value) {
-        this.setDataValue('date', value ? moment(value).format('YYYY-MM-DD') : moment().format('YYYY-MM-DD'));
+      set() {
+        this.setDataValue('date', CurrencyUtils.today());
       }
     },
     created_at: {

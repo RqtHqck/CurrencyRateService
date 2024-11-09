@@ -1,6 +1,7 @@
 const { Sequelize, Model, DataTypes } = require('sequelize');
 const sequelize = require('../../../utils/sequelize')
-const moment = require('moment');
+const AuthUtils = require('../utils/auth.utils');
+
 
 class User extends Model {}
 
@@ -51,19 +52,18 @@ User.init({
         },
       }
     },
-    // last_login: {
-    //   type: DataTypes.DATEONLY,
-    //   allowNull: false,
-    //   defaultValue: () => moment().format('YYYY-MM-DD'),
-    //   set(value) {
-    //     this.setDataValue('date', value ? moment(value).format('YYYY-MM-DD') : moment().format('YYYY-MM-DD'));
-    //   }
-    // },
-    // created_at: {
-    //   type: DataTypes.DATE,
-    //   allowNull: false,
-    //   defaultValue: Sequelize.literal('CURRENT_TIMESTAMP') // For MySQL
-    // }
+    last_login: {
+      type: DataTypes.DATEONLY,
+      allowNull: false,
+      set(value) {
+        this.setDataValue('date', AuthUtils.today(value));
+      }
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP') // For MySQL
+    }
   }, {
     sequelize,
     modelName: 'User',
