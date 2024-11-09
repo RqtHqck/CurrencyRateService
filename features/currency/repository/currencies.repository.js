@@ -14,7 +14,6 @@ class CurrencyRepository extends CurrenciesUtils {
   }
 
   static filterCurrencies = async (filters) => {
-    console.log(filters)
     return await Currency.findAll({ where: filters });  // date & ticket
   }
 }

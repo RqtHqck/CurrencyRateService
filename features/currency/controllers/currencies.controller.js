@@ -6,9 +6,10 @@ class CurrenciesController {
 
   static getCurrencies = async (req, res) => {
     const { date,  ticket } = req.query;  // take ticket query param
-    console.log('CurrenciesController::GET getCurrencies');
+    logger.info('CurrenciesController::GET getCurrencies');
     try {
       await CurrenciesService.checkOrRetrieveTodayCurrencies();  // check today currencies
+      console.log('checkOrRetrieveTodayCurrencies')
       const currencies = await CurrenciesService.getFilterCurrencies({date, ticket}, 'getCurrencies');
 
       return res.status(200).json(currencies);
@@ -21,6 +22,7 @@ class CurrenciesController {
 
   static getCoupleCurrency = async (req, res) => {
     const { from, to } = req.query;
+    logger.info('CurrenciesController::GET getCoupleCurrency');
 
     try {
       await CurrenciesService.checkOrRetrieveTodayCurrencies();  // check today currencies

@@ -1,7 +1,7 @@
 const logger = require('../../../utils/logger'),
   axios = require('axios'),
   CurrenciesUtils = require('../utils/currencies.utils'),
-  {Op} = require('sequelize');
+  {Op} = require('sequelize'),
   CurrenciesRepository = require('../repository/currencies.repository');
 
 
@@ -16,7 +16,7 @@ class CurrenciesService extends CurrenciesUtils{
       for( const [key, value] of Object.entries(rates) ) {
         currencies.push({ code: key, value: parseFloat(value) });  // Add obj-s to arr
       }
-
+      console.log(`TO SAVE${currencies}`);
       await CurrenciesRepository.saveCurrencies(currencies);  // Save to db
     } catch (err) {
       logger.error('Error during saving new currencies to database:', err);
@@ -43,10 +43,10 @@ class CurrenciesService extends CurrenciesUtils{
 
   static checkOrRetrieveTodayCurrencies = async () => {
     try {
-      const currencies = await CurrenciesRepository.filterCurrencies({date: this.today}); // Get today currencies from db
-      if (!currencies && currencies.length === 0 ) {
+      let currencies = await CurrenciesRepository.filterCurrencies({date: this.today}); // Get today currencies from db
+      if ( currencies.length === 0 ) {
         logger.info('No today currencies, take today currencies');
-        await CurrenciesRepository.saveCurrencies(); // save to db
+        await CurrenciesService.saveCurrencies(); // save to db
       }
     } catch (err) {
       logger.error('Unexpected error while retrieving checking is current API data exists', err);
@@ -61,7 +61,6 @@ class CurrenciesService extends CurrenciesUtils{
   static getFilterCurrencies = async (params, endpoint) => {
     const filters = {};
     if (endpoint === 'getCurrencies') {
-      // console.log(filters)
       if (params.date && params.ticket) {
         filters[Op.and] = [{date: params.date, code: params.ticket}]; // date && ticket
 
@@ -76,7 +75,6 @@ class CurrenciesService extends CurrenciesUtils{
 
       }
     } else if (endpoint === 'getCoupleCurrency') {
-      console.log(filters)
       if (params.from) {
         filters[Op.and] = [{date: this.today, code: params.from}];
 
