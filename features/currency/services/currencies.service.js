@@ -1,4 +1,4 @@
-const logger = require('../../../utils/logger'),
+const logger = require('@utils/logger'),
   axios = require('axios'),
   CurrencyUtils = require('../utils/currencies.utils'),
   {Op} = require('sequelize'),

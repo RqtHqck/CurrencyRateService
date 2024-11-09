@@ -1,4 +1,6 @@
 require('dotenv').config({path:`./config/${ process.env.NODE_ENV === 'development' ? '.env.development' : '.env.production' }`});
+require('module-alias/register');
+
 const express = require('express'),
   bodyParser = require('body-parser'),
   morgan = require('morgan'),

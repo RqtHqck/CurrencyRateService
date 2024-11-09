@@ -1,8 +1,8 @@
-const BaseUtils = require('../../../utils/BaseUtils');
+const BaseUtils = require('@utils/BaseUtils');
 
-class AuthUtils {
+class AuthUtils extends BaseUtils {
   constructor() {
-    Object.assign(this, new BaseUtils())
+    super();
   }
 }
 

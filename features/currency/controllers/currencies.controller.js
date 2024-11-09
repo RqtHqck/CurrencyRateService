@@ -1,4 +1,4 @@
-const logger = require('../../../utils/logger'),
+const logger = require('@utils/logger'),
   CurrenciesService = require('../services/currencies.service')
 
 
@@ -9,7 +9,6 @@ class CurrenciesController {
     logger.info('CurrenciesController::GET getCurrencies');
     try {
       await CurrenciesService.checkOrRetrieveTodayCurrencies();  // check today currencies
-      console.log('checkOrRetrieveTodayCurrencies')
       const currencies = await CurrenciesService.getFilterCurrencies({date, ticket}, 'getCurrencies');
 
       return res.status(200).json(currencies);

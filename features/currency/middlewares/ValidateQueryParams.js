@@ -1,5 +1,5 @@
 const { query, validationResult} = require('express-validator'),
-  logger = require('../../../utils/logger'),
+  logger = require('@utils/logger'),
   CurrencyUtils = require('../utils/currencies.utils');
 
 

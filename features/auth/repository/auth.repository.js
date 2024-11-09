@@ -1,11 +1,10 @@
-const BaseRepository = require('../../../repository/BaseRepository'),
-  User = require('../models/User')
+const BaseRepository = require('@repository/BaseRepository'),
+  User = require('../models/User');
 
-class UserRepository {
+class UserRepository extends BaseRepository {
   constructor() {
-    Object.assign(this, new BaseRepository(User));
+    super(User);
   }
-
 }
 
 const userRepository = new UserRepository();

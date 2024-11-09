@@ -1,4 +1,4 @@
-const BaseUtils = require('../../../utils/BaseUtils');
+const BaseUtils = require('@utils/BaseUtils');
 
 class CurrencyUtils extends BaseUtils {
   constructor() {

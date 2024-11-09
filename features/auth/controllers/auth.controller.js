@@ -1,7 +1,4 @@
-const logger = require('../../../utils/logger'),
-  User = require('../models/User')
-
-
+const logger = require('@utils/logger')
 
 class AuthController {
 

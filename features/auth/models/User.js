@@ -1,5 +1,5 @@
 const { Sequelize, Model, DataTypes } = require('sequelize');
-const sequelize = require('../../../utils/sequelize')
+const sequelize = require('@utils/sequelize')
 const AuthUtils = require('../utils/auth.utils');
 
 

@@ -1,4 +1,4 @@
-const BaseRepository = require('../../../repository/BaseRepository'),
+const BaseRepository = require('@repository/BaseRepository'),
   Currency = require('../models/Currency')
 
 class CurrencyRepository extends BaseRepository {
