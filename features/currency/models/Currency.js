@@ -53,7 +53,4 @@ Currency.init({
   }
 );
 
-
-
-
 module.exports = Currency;

@@ -7,7 +7,6 @@ const express = require('express'),
   cors = require('cors');
 // UTILS
 const logger = require('./utils/logger'),
-  sequelize = require('./utils/sequelize'),
   scheduleTasks = require('./utils/nodeCron'),
   limiter = require('./utils/limiter');
 
@@ -24,7 +23,9 @@ app.use(cors({ origin: true, methods: ['GET', 'POST'] }));
 scheduleTasks();
 
 // Routes
-const apiRoutes = require('./features/currency/routes/index');
-app.use('/api', apiRoutes);
+const currencyRoutes = require('./features/currency/routes/index');
+app.use('/api', currencyRoutes);
+const authRoutes = require('./features/auth/routes/index');
+app.use('/api', authRoutes);
 
 module.exports = app;
