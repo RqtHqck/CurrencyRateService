@@ -1,5 +1,4 @@
-require('dotenv').config({path:'./config/.env.production'});
-
+// require('dotenv').config({ path:`${process.env.NODE_ENV === 'development' ? '.env.development' : '.env.production'}` });
 module.exports = {
   development: {
     username: process.env.DB_USER,

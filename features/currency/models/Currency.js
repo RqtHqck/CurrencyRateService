@@ -22,8 +22,9 @@ Currency.init({
     date: {
       type: DataTypes.DATEONLY,
       allowNull: false,
-      set() {
-        this.setDataValue('date', CurrencyUtils.today());
+      defaultValue: CurrencyUtils.today(),
+      set(value) {
+        this.setDataValue('date', CurrencyUtils.today(value));
       }
     },
     created_at: {

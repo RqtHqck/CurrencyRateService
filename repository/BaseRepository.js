@@ -23,6 +23,15 @@ class BaseRepository {
     }
   }
 
+  findOne = async (filters) => {
+    try {
+      return await this.model.findOne({ where: filters });
+    } catch (err) {
+      logger.error('Error finding request from database', err);
+      throw new Error('Error finding request from database');
+    }
+  }
+
 }
 
 module.exports = BaseRepository;
