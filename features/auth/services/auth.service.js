@@ -1,14 +1,15 @@
 const logger = require('@utils/logger'),
   bcrypt = require('bcryptjs'),
   jwt = require('jsonwebtoken'),
+  {Op} = require('sequelize'),
   UserRepository = require('../repository/auth.repository')
 
 
 class AuthService {
 
-  static checkUserExists = async (email) => {
-    const candidate = await UserRepository.findOne({ email });
-    return candidate || false;
+  static checkUserExists = async (email, username=null) => {
+    const candidate = await UserRepository.filter({ [Op.or]: [{ email }, { username }] });
+    return candidate.length === 0 ? false : candidate[0];
   }
 
   static saveNewUser = async (email, password, username) => {

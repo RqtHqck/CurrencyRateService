@@ -2,7 +2,7 @@ const router = require('express').Router(),
   passport = require('passport')
 
 const CurrenciesController = require('../controllers/currencies.controller');
-const ValidateQueryParams = require('../middlewares/ValidateQueryParams');
+const ValidateQueryParams = require('../validators/ValidateQueryParams');
 
 
 // GET http://localhost:5000/api/currency/getCurrencies?date=date&ticket=ticket

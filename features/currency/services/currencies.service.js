@@ -1,7 +1,7 @@
 const logger = require('@utils/logger'),
   axios = require('axios'),
-  CurrencyUtils = require('../utils/currencies.utils'),
   {Op} = require('sequelize'),
+  CurrencyUtils = require('../utils/currencies.utils'),
   CurrencyRepository = require('../repository/currencies.repository')
 
 
@@ -16,7 +16,6 @@ class CurrenciesService {
       for( const [key, value] of Object.entries(rates) ) {
         currencies.push({ code: key, value: parseFloat(value) });  // Add obj-s to arr
       }
-      console.log(`TO SAVE${currencies}`);
       await CurrencyRepository.save(currencies);  // Save to db
     } catch (err) {
       logger.error('Error during saving new currencies to database:', err);

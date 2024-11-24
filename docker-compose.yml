@@ -1,0 +1,32 @@
+services:
+  main:
+    container_name: main
+    build:
+      context: .
+    env_file:
+      - ./config/.env.development
+    volumes:
+      - .:/app
+    ports:
+      - 5000:5000
+      - 9229:9229
+    command: npm run dev
+    depends_on:
+      - mysql
+    restart: always
+
+  mysql:
+    container_name: mysql
+    image: mysql
+    env_file:
+      - ./config/.env.development
+    volumes:
+      - ./dbdata:/var/lib/mysql/
+    restart: always
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+volumes:
+  dbdata:

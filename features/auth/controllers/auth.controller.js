@@ -1,13 +1,12 @@
 const logger = require('@utils/logger'),
-  AuthService = require('../services/auth.service'),
-  jwt = require('jsonwebtoken');
+  AuthService = require('../services/auth.service');
 
 class AuthController {
 
   static login = async (req, res) => {
     const { email, password } = req.body;
     const candidate = await AuthService.checkUserExists(email);
-
+    console.log(candidate);
     if (candidate) {
       const passwordResult = AuthService.compareHashedPassword(password, candidate.password);
       if (passwordResult) {
@@ -17,17 +16,16 @@ class AuthController {
         return res.status(401).json({message: 'Incorrect password'})
       }
     } else {
-      return res.status(401).json({message: 'Incorrect email'})
+      return res.status(401).json({message: 'Incorrect or not existing email'})
     }
   }
 
 
   static register = async (req, res) => {
     const { email, password, username } = req.body;
-    const candidate = await AuthService.checkUserExists(email);
-
+    const candidate = await AuthService.checkUserExists(email, username);
     if (candidate) {
-      return res.status(409).json({message:'This email is already exists'})
+      return res.status(409).json({message:'Email or username is already exists'})
     }
 
     await AuthService.saveNewUser( email, password, username );

@@ -12,9 +12,7 @@ module.exports = passport => {
   passport.use(
     new JwtStrategy(options, async (payloads, done) => {
       try {
-        console.log('JWT Payload:', payloads);
         const user = await UserRepository.findOne({ email: payloads.email });
-        console.log(user);
         if (!user) {
           return done(null, false, { message: 'User not found' });
         }
