@@ -1,12 +1,10 @@
-const logger = require('@utils/logger'),
-  AuthService = require('../services/auth.service');
+const AuthService = require('./auth.service');
 
 class AuthController {
 
   static login = async (req, res) => {
     const { email, password } = req.body;
     const candidate = await AuthService.checkUserExists(email);
-    console.log(candidate);
     if (candidate) {
       const passwordResult = AuthService.compareHashedPassword(password, candidate.password);
       if (passwordResult) {

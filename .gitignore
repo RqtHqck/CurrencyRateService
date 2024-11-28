@@ -12,9 +12,10 @@ temp/
 .tmp/
 logs/
 migrations/
+dbdata/
 
 # Secret data
-.env.development
+.env
 .env.production
 
 # IDE and editors

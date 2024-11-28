@@ -1,7 +1,6 @@
 const router = require('express').Router(),
-  AuthController = require('../controllers/auth.controller');
-  BodyValidator = require('../validators/BodyValidator');
-
+  AuthController = require('./auth.controller');
+  BodyValidator = require('./auth.validators');
 
 // GET http://localhost:port/api/auth/login
 router.post(

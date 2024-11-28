@@ -1,8 +1,8 @@
 const BaseValidator = require('@utils/BaseValidator'); // Import base validator
-const CurrencyUtils = require('../utils/currencies.utils');
+const CurrencyUtils = require('./currencies.utils');
 const { query } = require('express-validator');
 
-class ValidateQueryParams extends BaseValidator {
+class CurrenciesValidators extends BaseValidator {
   // Validate date query param
   static validateDate() {
     return [
@@ -51,4 +51,4 @@ class ValidateQueryParams extends BaseValidator {
   }
 }
 
-module.exports = ValidateQueryParams;
+module.exports = CurrenciesValidators;

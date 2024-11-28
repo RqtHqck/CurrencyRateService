@@ -1,7 +1,7 @@
 const { body } = require('express-validator'),
   BaseValidator = require('@utils/BaseValidator'); // Import base validator
 
-class BodyValidator extends BaseValidator {
+class AuthValidators extends BaseValidator {
   static validateUsername() {
     return [
       body('username')
@@ -33,4 +33,4 @@ class BodyValidator extends BaseValidator {
   }
 }
 
-module.exports = BodyValidator;
+module.exports = AuthValidators;

@@ -2,7 +2,7 @@ const logger = require('@utils/logger'),
   bcrypt = require('bcryptjs'),
   jwt = require('jsonwebtoken'),
   {Op} = require('sequelize'),
-  UserRepository = require('../repository/auth.repository')
+  UserRepository = require('./auth.repository')
 
 
 class AuthService {

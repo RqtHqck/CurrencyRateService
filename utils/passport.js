@@ -1,7 +1,7 @@
 const JwtStrategy = require('passport-jwt').Strategy,
   ExtractJwt = require('passport-jwt').ExtractJwt,
   logger = require('@utils/logger'),
-  UserRepository = require('../features/auth/repository/auth.repository');
+  UserRepository = require('../features/auth/auth.repository');
 
 module.exports = passport => {
   const options = {

@@ -1,8 +1,8 @@
 const logger = require('@utils/logger'),
   axios = require('axios'),
   {Op} = require('sequelize'),
-  CurrencyUtils = require('../utils/currencies.utils'),
-  CurrencyRepository = require('../repository/currencies.repository')
+  CurrencyUtils = require('./currencies.utils'),
+  CurrencyRepository = require('./currencies.repository')
 
 
 class CurrenciesService {

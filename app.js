@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('combined', { stream: logger.stream }));
 app.use(compression());  // Response compression by different types 
-app.use(helmet()); // Defense from the XSS attacks
+app.use(helmet()); // Defense; from the XSS attacks
 app.use(limiter);
 app.use(cors({ origin: `http://localhost:${process.env.PORT}`, methods: ['GET', 'POST'], allowedHeaders: ['Content-Type', 'Authorization'] }));
 scheduleTasks();
@@ -31,10 +31,10 @@ app.use(passport.initialize())
 require('@utils/passport')(passport);
 
 // ROUTES
-const currencyRoutes = require('./features/currency/routes/index');
-app.use('/api', currencyRoutes);
-const authRoutes = require('./features/auth/routes/index');
-app.use('/api', authRoutes);
+const currencyRoutes = require('./features/currency/currencies.routes');
+app.use('/api/currency', currencyRoutes);
+const authRoutes = require('./features/auth/auth.routes');
+app.use('/api/auth', authRoutes);
 
 
 module.exports = app;

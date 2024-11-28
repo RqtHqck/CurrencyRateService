@@ -1,8 +1,7 @@
 const router = require('express').Router(),
-  passport = require('passport')
-
-const CurrenciesController = require('../controllers/currencies.controller');
-const ValidateQueryParams = require('../validators/ValidateQueryParams');
+  passport = require('passport'),
+  CurrenciesController = require('./currencies.controller'),
+  ValidateQueryParams = require('./currencies.validators');
 
 
 // GET http://localhost:5000/api/currency/getCurrencies?date=date&ticket=ticket
@@ -22,11 +21,5 @@ router.get(
   ValidateQueryParams.validateTicketFromTo(),
   CurrenciesController.getCoupleCurrency
 );
-
-// GET http://localhost:5000/api/currency/saveCurrenciesFreaks
-// router.get(
-//   '/saveCurrenciesFreaks',
-//   CurrenciesController.saveFromCurrenciesFromApiToDb
-// );
 
 module.exports = router;

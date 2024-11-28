@@ -1,6 +1,6 @@
 const { Sequelize, Model, DataTypes } = require('sequelize');
 const sequelize = require('@utils/sequelize')
-const CurrencyUtils = require('../utils/currencies.utils');
+const CurrencyUtils = require('./currencies.utils');
 
 
 class Currency extends Model {}

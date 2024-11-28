@@ -1,5 +1,5 @@
 const logger = require('@utils/logger'),
-  CurrenciesService = require('../services/currencies.service')
+  CurrenciesService = require('./currencies.service')
 
 
 class CurrenciesController {

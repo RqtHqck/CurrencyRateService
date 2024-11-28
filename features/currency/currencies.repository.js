@@ -1,5 +1,5 @@
 const BaseRepository = require('@repository/BaseRepository'),
-  Currency = require('../models/Currency')
+  Currency = require('./currencies.model')
 
 class CurrencyRepository extends BaseRepository {
   constructor() {
